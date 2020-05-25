@@ -23,7 +23,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: 'Get version to deploy'
       id: get_version
-      run: echo "::set-output version=(cat manifest.json | jq .'benefit_finder')"
+      run: echo "::set-output name=version::(cat manifest.json | jq .'benefit_finder')"
 
     - name: 'Display image name'
       run: echo 'registry/cv-19/release:${{ steps.get_version.outputs.version }}'
