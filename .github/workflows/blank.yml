@@ -25,23 +25,5 @@ jobs:
       id: get_version
       run: echo "::set-output version=(cat manifest.json | jq .'benefit_finder')"
 
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - uses: azure/docker-login@v1
-      with:
-        login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY_SERVER }}
-        username: ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}
-        password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }}
-
-    - uses: azure/webapps-container-deploy@v1
-      with:
-        app-name: 'testinfra-appservice'
-        slot-name: 'staging'
-        images: '${{ secrets.AZURE_CONTAINER_REGISTRY_SERVER }}/cv-19/release:${{ steps.get_version.outputs.version }}'
-
-    - name: Azure logout
-      run: |
-        az logout
+    - name: 'Display image name'
+      run: echo 'registry/cv-19/release:${{ steps.get_version.outputs.version }}'
